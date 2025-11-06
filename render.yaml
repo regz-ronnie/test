@@ -4,12 +4,8 @@ services:
     env: python
     python:
       version: 3.9.0
-    buildCommand: |
-      chmod +x build.sh
-      ./build.sh
-    startCommand: |
-      chmod +x start.sh
-      ./start.sh
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn backend.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.0
@@ -18,7 +14,7 @@ services:
       - key: DEBUG
         value: "False"
       - key: DISABLE_COLLECTSTATIC
-        value: "0"
+        value: "1"
       - key: PYTHONUNBUFFERED
         value: "1"
     plan: free
